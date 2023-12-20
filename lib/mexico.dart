@@ -1,96 +1,91 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:world_flags/styles.dart';
 
-class Mexico extends StatelessWidget {
+class Mexico extends StatefulWidget {
   const Mexico({super.key});
 
-    @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(60),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-               
-                  Texto('World Flags'),
-                  
-                 
-                 Image.asset('assets/flags/m.png',width: 200, ),
-                 Texto('Bandera de México'),
-                   //  Arrange the Mexican flag correctly, when ordering it correctly send a "well done" message
-                 const Text('Ordena la bandera en el orden correcto:'),
-                 const Text('Arrange the flag in the correct order:'),
-                  const Gap(40),
-                  Container(
-                    color: Colors.amberAccent,
-                          width: double.infinity,
-                          height: 100,
-                          child:  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Draggable( feedback: Image.asset('assets/flags/w.png',width: 50, ),
-                        childWhenDragging: Container(
-                          width: 50,
-                          height: 50,
-                          color: Colors.blueGrey,
-                        ), 
-                        child: Image.asset('assets/flags/w.png',width: 50, ),),
-                         const Gap(20),
-                        Draggable( feedback: Image.asset('assets/flags/g.png',width: 50, ),
-                        childWhenDragging: Container(
-                          width: 50,
-                          height: 50,
-                          color: Colors.blueGrey,
-                        ), 
-                        child: Image.asset('assets/flags/g.png',width: 50, ),),
-                         const Gap(20),
-                        Draggable( feedback: Image.asset('assets/flags/r.png',width: 50, ), 
-                        childWhenDragging: Container(
-                          width: 50,
-                          height: 50,
-                          color: Colors.blueGrey,
-                        ), 
-                        child: Image.asset('assets/flags/r.png',width: 50, ),),
+  @override
+  State<Mexico> createState() => _MexicoState();
+}
 
-                        
-                          const Gap(20),
-                       
-                      ],
-                    ),),
-                 
-                  const Gap(20),
-                //  Arrange the Mexican flag correctly, when ordering it correctly send a "well done" message
-                  
-                 
-               
-                  //  SizedBox(
-                  //   width: double.infinity,
-                  //    child: ElevatedButton(
-                  //     style: Styles.button_style,
-                  //     onPressed: () {
-                  //       Navigator.of(context).pushNamed('MenuWeb');
-                  //     },
-                  //     child: Lottie.asset('assets/images/lotties/homered.json', width: 50,
-                      
-                  //     ),
-                  //                    ),
-                  //  ),
-                  
-                 
-                   
-                    
-                ],
-              ),
+class _MexicoState extends State<Mexico> {
+  List<String> mapPiece = [
+    "w.png",
+    "g.png",
+    "r.png"
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Texto('World Flags'),
             ),
-          ),
-        ));
-  }}
+            Image.asset('assets/flags/m.png',width: 200, ),
+            const Text('Ordena la bandera en el orden correcto:'),
+            const Text('Arrange the flag in the correct order:'),
+            const Gap(40),
+            Container(
+              color:Colors.amberAccent,
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: 150,
+              child:Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: mapPiece.map(
+                (e) => Draggable<String>(
+                  data: e,
+                  feedback: Material(
+                    child: Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.blue,
+                        child: Image.asset(
+                          'assets/flags/$e',
+                        width: 50,
+                        ),
+                      )
+                  ),
+                  childWhenDragging: Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.blue.withOpacity(0.2),
+                  ),
+                  child: DragTarget<String>(
+                    builder: (BuildContext context, List<String?> candidateData, List<dynamic> rejectedData) {
+                      return Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.blue,
+                        child: Image.asset(
+                          'assets/flags/$e',
+                        width: 50,
+                        ),
+                      );
+                    },
+                    onWillAccept: (data) => true,
+                    onAccept: (data) {
+                      setState(() {
+                        int currentIndex = mapPiece.indexOf(e);
+                        int newIndex = mapPiece.indexOf(data);
+                        mapPiece[currentIndex] = data;
+                        mapPiece[newIndex] = e;
+                      });
+                    },
+                  ),
+                ),
+              )
+              .toList(),
+              )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
