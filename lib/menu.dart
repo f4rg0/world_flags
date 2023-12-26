@@ -38,9 +38,9 @@ class Menu extends StatelessWidget {
                      child: ElevatedButton(
                       style: Styles.button_style,
                       onPressed: () {
-                        Navigator.of(context).pushNamed('mex');
+                        Navigator.of(context).pushNamed('mexi');
                       },
-                      child: Image.asset('assets/flags/m.png',
+                      child: Image.asset('assets/images/america.png', width: 120,
                       
                       ),
                                      ),
