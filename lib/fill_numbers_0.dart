@@ -26,10 +26,10 @@ List<String> mapPiece = [
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            
+            Texto('Ordena la bandera Correctamente'),
           Image.asset('assets/images/TM.png'),
           Container(
-              color:Colors.orange,
+              color:Colors.cyan,
               width: MediaQuery.of(context).size.width * 0.7,
               height: 150,
               child:Row(
@@ -84,14 +84,14 @@ List<String> mapPiece = [
 
 
            const Gap(30),
-            Texto('Escribe Mexico'),
+            Texto('Escribe el nombre de la bandera de Mexico'),
             const Gap(30),
             
                
                 const Gap(30),
                 SizedBox(
-                  width: 200,
-                  height: 200,
+                  width: 300,
+                 height: 250,
                   child: TextField(
                     controller: _textController,
                     textAlign: TextAlign.center,
